@@ -1,0 +1,19 @@
+{
+  "name": "agrilife-majors-degrees",
+  "version": "1.0.0",
+  "description": "AgriLife Majors and Degrees Post Type Plugin",
+  "main": "agrilife-majors-degrees.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AgriLife/agrilife-majors-degrees.git"
+  },
+  "author": "Zachary Watkins",
+  "license": "GPL-2.0+",
+  "bugs": {
+    "url": "https://github.com/AgriLife/agrilife-majors-degrees/issues"
+  },
+  "homepage": "https://github.com/AgriLife/agrilife-majors-degrees#readme"
+}

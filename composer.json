@@ -1,0 +1,21 @@
+{
+    "name": "agrilife/majorsdegrees",
+    "description": "Functionality for AgriLife Majors and Degrees Post Type Plugin",
+    "license": "GPL2+",
+    "authors": [
+        {
+            "name": "Zachary Watkins",
+            "email": "watkinza@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+    },
+	"require-dev": {
+	},
+    "autoload": {
+        "psr-4": {
+            "AgriLife\\MajorsDegrees\\": "src"
+        }
+    }
+}
