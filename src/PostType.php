@@ -45,7 +45,10 @@ class PostType {
 			'labels' => $labels,
 			'public' => true,
 			'show_ui' => true,
-			'rewrite' => array( 'slug' => $slug ),
+			'rewrite' => array(
+						'with_front' => false,
+						'slug' => $slug
+					),
 			'supports' => $supports,
 			'has_archive' => true,
 			'menu_icon' => $icon,
