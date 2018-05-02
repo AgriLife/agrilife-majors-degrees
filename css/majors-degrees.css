@@ -13,10 +13,10 @@
 .entry-header .image-wrap h1 {
 	position: absolute;
 	left: 0;
-  top: 45%;
+	top: 45%;
 	color: #fff;
 	padding-left: 30px;
-  line-height: 1.55;
+	line-height: 1.55;
 }
 
 .entry-header .image-wrap h1:after {
@@ -31,8 +31,8 @@
 	-ms-transform: skew(-20deg, 0deg); /* IE 9 */
 	-webkit-transform: skew(-20deg, 0deg); /* Safari */
 	transform: skew(-20deg, 0deg);
-  background: rgba(94, 86, 78, .9);
-  box-shadow: 5px 0 rgba(80, 0, 0, .7);
+	background: rgba(94, 86, 78, .9);
+	box-shadow: 5px 0 rgba(80, 0, 0, .7);
 }
 
 .entry-header .image-wrap h1 span {
@@ -65,8 +65,8 @@
 	}
 
 	.entry-content .columns .rankings-wrap {
-    padding-left: 1.75rem;
-    padding-right: 1.75rem;
+		padding-left: 1.75rem;
+		padding-right: 1.75rem;
 	}
 
 	.entry-content .columns .rankings-wrap h2,
