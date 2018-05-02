@@ -10,7 +10,7 @@ function mjd_project_register(){
 
     wp_register_style(
         'majors-degrees-project-styles',
-        AG_MAJDEG_DIR_URL . 'css/research-project.css',
+        AG_MAJDEG_DIR_URL . 'css/majors-degrees.css',
         array(),
         '',
         'screen'
@@ -31,14 +31,17 @@ if ( have_posts() ) :
 <div id="primary">
     <div id="content" role="main">
         <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-            <header class="entry-header row"><div class="columns">
-                <h1><?php the_title(); ?></h1>
+            <header class="entry-header row"><div class="columns"><?php
+                if( !empty( get_field('header_image') ) ):
+                ?><div class="image-wrap"><img src="<?php the_field('header_image'); ?>"><?php
+                endif; ?>
+                <h1><span><?php the_title(); ?></span></h1><?php
+                if( !empty( get_field('header_image') ) ){ ?></div><?php } ?>
             </div></header>
             <div class="entry-content">
                 <div class="row">
-                    <div class="columns small-12 medium-7 large-7"><?php
+                    <div class="columns small-12 medium-8 large-8"><?php
 
-                        $fields = get_fields();
                         if( !empty( get_field('about_the_degree') ) ){
 
                             ?><div class="about-the-degree">
@@ -74,7 +77,7 @@ if ( have_posts() ) :
 
                         ?>
                     </div>
-                    <div class="columns small-12 medium-5 large-5"><?php
+                    <div class="columns small-12 medium-4 large-4 rankings"><div class="rankings-wrap"><?php
 
                         if( !empty( get_field('rankings') ) ){
 
@@ -84,7 +87,7 @@ if ( have_posts() ) :
 
                         }
 
-                    ?></div>
+                    ?></div></div>
                 </div>
             </div>
         </article>
