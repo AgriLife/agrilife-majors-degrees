@@ -9,10 +9,10 @@ add_action( 'wp_enqueue_scripts', 'mjd_project_enqueue' );
 function mjd_project_register(){
 
     wp_register_style(
-        'majors-degrees-project-styles',
+        'majors-degrees-styles',
         AG_MAJDEG_DIR_URL . 'css/majors-degrees.css',
         array(),
-        '',
+        filemtime(AG_MAJDEG_DIR_PATH . 'css/majors-degrees.css'),
         'screen'
     );
 
@@ -20,7 +20,7 @@ function mjd_project_register(){
 
 function mjd_project_enqueue(){
 
-    wp_enqueue_style( 'majors-degrees-project-styles' );
+    wp_enqueue_style( 'majors-degrees-styles' );
 
 }
 
