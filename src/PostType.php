@@ -46,9 +46,9 @@ class PostType {
 			'public' => true,
 			'show_ui' => true,
 			'rewrite' => array(
-						'with_front' => false,
-						'slug' => $slug
-					),
+            'with_front' => false,
+            'slug' => $slug
+        	),
 			'supports' => $supports,
 			'has_archive' => true,
 			'menu_icon' => $icon,

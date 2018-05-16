@@ -1,4 +1,4 @@
-/* Post Type: Majors and Degrees
+/* Post Type: Majors and Degreess
  */
 .majors-and-degrees.entry .entry-content .columns .rankings-wrap {
 	background-color: #EBEBEA;
@@ -15,8 +15,11 @@
 	left: 0;
 	top: 45%;
 	color: #fff;
+	width: 600px;
 	padding-left: 30px;
-	line-height: 1.55;
+	font-size: 1.9rem;
+	line-height: 1.2;
+	padding-top: 8px;
 }
 
 .entry-header .image-wrap h1:after {
@@ -27,7 +30,7 @@
 	top: 0;
 	left: -10%;
 	width: 680px;
-	height: 65px;
+	height: 90px;
 	-ms-transform: skew(-20deg, 0deg); /* IE 9 */
 	-webkit-transform: skew(-20deg, 0deg); /* Safari */
 	transform: skew(-20deg, 0deg);
@@ -75,4 +78,57 @@
 		padding-left: .6rem;
 		padding-right: .6rem;
 	}
+}
+
+.advisor-link-wrap {
+	position: relative;
+	margin-top: 20px;
+	overflow: hidden;
+	width: 100%;
+	height: 65px;
+}
+
+.advisor-link-wrap:after {
+	content: "";
+	display: block;
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: -17px;
+	width: 100%;
+	height: 65px;
+	-ms-transform: skew(-20deg, 20deg); /* IE 9 */
+	-webkit-transform: skew(-20deg, 0deg); /* Safari */
+	transform: skew(-20deg, 0deg);
+	background: rgba(94, 86, 78, .9);
+	box-shadow: 5px 0 rgba(80, 0, 0, .7);
+}
+
+.advisor-link-wrap a.button,
+.advisor-link-wrap a.button:hover {
+	box-sizing: border-box;
+	cursor: pointer;
+	color: #FFF;
+	background: none transparent;
+	border: 0 none;
+	display: block;
+	padding: 15px 0 0 30px;
+	width: 100%;
+	height: 65px;
+	text-align: left;
+	line-height: 1.1em;
+	position: relative;
+	z-index: 2;
+}
+
+.advisor-link-wrap a.button span {
+	display: block;
+}
+
+.advisor-link-wrap a.button span.line1 {
+	color: #CCC;
+}
+
+.advisor-link-wrap a.button span.line2 {
+	text-transform: uppercase;
 }

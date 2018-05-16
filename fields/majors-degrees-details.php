@@ -106,6 +106,21 @@ acf_add_local_field_group(array(
 			'media_upload' => 0,
 			'delay' => 0,
 		),
+		array(
+			'key' => 'field_5afb4680f3f66',
+			'label' => 'Advisor Link',
+			'name' => 'advisor_link',
+			'type' => 'link',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => array(
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			),
+			'return_format' => 'url',
+		),
 	),
 	'location' => array(
 		array(
