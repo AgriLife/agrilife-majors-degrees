@@ -60,7 +60,12 @@ if ( have_posts() ) :
                             ?><h2>Rankings</h2><?php
                             the_field('rankings');
                         }
-                    ?></div></div>
+
+                    ?></div><?php if( !empty( get_field('advisor_link') ) ){
+
+                        ?><div class="advisor-link-wrap"><a class="button" href="<?php the_field('advisor_link'); ?>"><span class="line1">Want to know more?</span><span class="line2">Contact an Advisor</span></a></div><?php
+
+                    } ?></div>
                 </div>
             </div>
         </article>
