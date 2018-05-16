@@ -14,7 +14,13 @@ function mjd_project_register(){
     );
 }
 function mjd_project_enqueue(){
+<<<<<<< HEAD
     wp_enqueue_style( 'majors-degrees-styles' );
+=======
+
+    wp_enqueue_style( 'majors-degrees-styles' );
+
+>>>>>>> 4302b60c8b105fbd756c37266c63b9f7c494f634
 }
 get_header();
 if ( have_posts() ) :
