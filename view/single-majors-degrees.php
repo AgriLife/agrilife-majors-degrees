@@ -1,10 +1,13 @@
 <?php
  /*Template Name: Research Project
  */
+
 // Queue assets
 add_action( 'wp_enqueue_scripts', 'mjd_project_register' );
 add_action( 'wp_enqueue_scripts', 'mjd_project_enqueue' );
+
 function mjd_project_register(){
+
     wp_register_style(
         'majors-degrees-styles',
         AG_MAJDEG_DIR_URL . 'css/majors-degrees.css',
@@ -12,12 +15,15 @@ function mjd_project_register(){
         filemtime(AG_MAJDEG_DIR_PATH . 'css/majors-degrees.css'),
         'screen'
     );
+
 }
+
 function mjd_project_enqueue(){
 
     wp_enqueue_style( 'majors-degrees-styles' );
 
 }
+
 get_header();
 if ( have_posts() ) :
     while ( have_posts() ) : the_post();
@@ -35,35 +41,55 @@ if ( have_posts() ) :
             <div class="entry-content">
                 <div class="row">
                     <div class="columns small-12 medium-8 large-8"><?php
+
                         if( !empty( get_field('about_the_degree') ) ){
+
                             ?><div class="about-the-degree">
                                 <h2>About The Degree</h2><?php
+
                                 the_field('about_the_degree');
+
                             ?></div><?php
+
                         }
+
                         if( !empty( get_field('careers') ) ){
+
                             ?><div class="careers">
                                 <h2>Careers</h2><?php
+
                                 the_field('careers');
+
                             ?></div><?php
+
                         }
+
                         if( !empty( get_field('courses') ) ){
+
                             ?><div class="rankings">
                                 <h2>Courses</h2><?php
+
                                 the_field('courses');
+
                             ?></div><?php
+
                         }
+
                         ?>
                     </div>
                     <div class="columns small-12 medium-4 large-4 rankings"><div class="rankings-wrap"><?php
+
                         if( !empty( get_field('rankings') ) ){
+
                             ?><h2>Rankings</h2><?php
+
                             the_field('rankings');
+
                         }
 
                     ?></div><?php if( !empty( get_field('advisor_link') ) ){
 
-                        ?><div class="advisor-link-wrap"><a class="button" href="<?php the_field('advisor_link'); ?>"><span class="line1">Want to know more?</span><span class="line2">Contact an Advisor</span></a></div><?php
+                        ?><div class="advisor-link-wrap"><a href="<?php the_field('advisor_link'); ?>"><span class="line1">Want to know more?</span><span class="line2">Contact an Advisor</span></a></div><?php
 
                     } ?></div>
                 </div>

@@ -24,13 +24,34 @@ add_action( 'init', function(){
     require_once(AG_MAJDEG_DIR_PATH . 'fields/majors-degrees-details.php');
   }
 
-  $custom_post_type = new \AgriLife\MajorsDegrees\PostType(
-  	'Majors and Degrees', array(), 'dashicons-portfolio',
-  	array(
-  		'title', 'genesis-seo', 'genesis-layouts', 'genesis-scripts'
-  	)
+  $post_type = new \AgriLife\MajorsDegrees\PostType(
+    'Majors and Degrees', 'majors-and-degrees', 'agmd', array(), 'dashicons-portfolio',
+    array(
+      'title', 'editor', 'thumbnail', 'revisions', 'genesis-seo', 'genesis-layouts', 'genesis-scripts'
+    )
   );
 
-  $custom_post_type = new \AgriLife\MajorsDegrees\Templates( 'majors-and-degrees', 'single-majors-degrees.php', 'archive-majors-degrees.php' );
+  $taxonomy_department = new \AgriLife\MajorsDegrees\Taxonomy(
+    'Department', 'department', 'majors-and-degrees', 'agmd',
+    array(
+      'hierarchical' => false
+    )
+  );
+
+  $taxonomy_degree_type = new \AgriLife\MajorsDegrees\Taxonomy(
+    'Degree Type', 'degree-type', 'majors-and-degrees', 'agmd',
+    array(
+      'hierarchical' => false
+    )
+  );
+
+  $taxonomy_keyword = new \AgriLife\MajorsDegrees\Taxonomy(
+    'Keyword', 'keyword', 'majors-and-degrees', 'agmd',
+    array(
+      'hierarchical' => false
+    )
+  );
+
+  $post_template = new \AgriLife\MajorsDegrees\Templates( 'majors-and-degrees', 'single-majors-degrees.php', 'archive-majors-degrees.php' );
 
 });

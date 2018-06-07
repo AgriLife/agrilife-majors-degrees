@@ -17,12 +17,10 @@ class PostType {
    * @array $supports
    * @return void
    */
-	public function __construct( $name, $taxonomy = array(), $icon = 'dashicons-portfolio', $supports = array( 'title', 'post-formats', 'genesis-seo', 'genesis-layouts', 'genesis-scripts' ) ) {
+	public function __construct( $name, $slug, $tag, $taxonomies = array( 'category', 'post_tags' ), $icon = 'dashicons-portfolio', $supports = array( 'title' ) ) {
 
-		$tag = 'mjd';
 		$singular = $name;
 		$plural = $name . 's';
-		$slug = str_replace( ' ', '-', strtolower( $name ) );
 
 		// Backend labels
 		$labels = array(
@@ -46,18 +44,15 @@ class PostType {
 			'public' => true,
 			'show_ui' => true,
 			'rewrite' => array(
-            'with_front' => false,
-            'slug' => $slug
-        	),
+				'with_front' => false,
+				'slug' => $slug
+			),
 			'supports' => $supports,
 			'has_archive' => true,
 			'menu_icon' => $icon,
 			'publicly_queryable' => true,
+			'taxonomies' => $taxonomies
 		);
-
-		if( !empty( $taxonomy ) ){
-			$args['taxonomies'] = $taxonomy;
-		}
 
 		// Register the Reports post type
 		register_post_type( $slug, $args );
