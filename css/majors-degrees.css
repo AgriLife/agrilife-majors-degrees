@@ -1,5 +1,6 @@
 /* Post Type: Majors and Degreess
  */
+
 .majors-and-degrees.entry .entry-content .columns .rankings-wrap {
 	background-color: #EBEBEA;
 }
@@ -111,6 +112,7 @@
 	color: #FFF;
 	background: none transparent;
 	border: 0 none;
+	border-radius: 0;
 	display: block;
 	padding: 15px 0 0 30px;
 	width: 100%;
