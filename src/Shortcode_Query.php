@@ -13,12 +13,12 @@ class Shortcode_Query {
 	 * @param  string $search The search term (optional)
 	 * @return object         A WP_Query object with the results
 	 */
-	public static function get_posts( $post_type = 'posts', $atts = array() ) {
+	public static function get_posts( $post_type = 'posts', $atts = array(), $search = '' ) {
 
 		// Set default arguments for every People query
 		$args = array(
 			'post_type'      => $post_type,
-			'post_status'    => 'publish',
+			'post_status'    => 'any',
 			'posts_per_page' => -1,
 			'orderby'       => 'title',
 			'order'          => 'ASC'
@@ -35,11 +35,11 @@ class Shortcode_Query {
 			);
 		}
 
-		if ( ! empty( $atts['degree-types'] ) ) {
+		if ( ! empty( $atts['degree_types'] ) ) {
 			$tax_query[] = array(
 				'taxonomy' => 'degree-type',
 				'field'    => 'slug',
-				'terms'    => explode(',', $atts['degree-types']),
+				'terms'    => explode(',', $atts['degree_types']),
 			);
 		}
 
@@ -60,7 +60,7 @@ class Shortcode_Query {
 			$args['s'] = $search;
 		}
 
-		return new WP_Query( $args );
+		return new \WP_Query( $args );
 
 	}
 

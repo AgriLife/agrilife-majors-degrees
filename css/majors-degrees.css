@@ -1,8 +1,9 @@
 /* Post Type: Majors and Degreess
  */
 
-.majors-and-degrees.entry .entry-content .columns .rankings-wrap {
+.majors-and-degrees.entry .entry-content .columns.right > div {
 	background-color: #EBEBEA;
+	padding: 1.25rem 1.75rem;
 }
 
 .entry-header .image-wrap {
@@ -55,11 +56,11 @@
 
 @media screen and (min-width: 45.063em){
 	.entry-content .columns:first-child,
-	.entry-content .columns.rankings .rankings-wrap {
+	.entry-content .columns.right .rankings-wrap {
 		padding-top: 3rem;
 	}
 
-	.entry-content .columns.rankings .rankings-wrap {
+	.entry-content .columns.right .rankings-wrap {
 		padding-bottom: 3rem;
 	}
 

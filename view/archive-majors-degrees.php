@@ -25,11 +25,30 @@ function mjd_project_enqueue_styles(){
 
 }
 
-get_header(); ?>
+get_header();
+
+?>
 <div class="content-sidebar-wrap">
 	<main class="content">
 		<h1 class="entry-title"><a href="<?php echo get_post_type_archive_link( 'majors-and-degrees' ); ?>">Majors and Degrees Archive</a></h1><?php
-
+		$tq = new WP_Query(array(
+			'post_type' => 'majors-and-degrees',
+			'tax_query' => array(
+				array(
+					'taxonomy' => 'keyword',
+					'field'    => 'slug',
+					'terms'    => 'test',
+				),
+			),
+		));
+		echo '<pre>';
+		print_r($tq);
+		echo '</pre>';
+		if(have_posts()){
+			echo 'true';
+		} else {
+			echo 'false';
+		}
 		if( have_posts() ) :
 			while( have_posts() ) : the_post();
 				?>

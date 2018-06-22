@@ -66,7 +66,7 @@ if ( have_posts() ) :
 
                         if( !empty( get_field('courses') ) ){
 
-                            ?><div class="rankings">
+                            ?><div class="courses">
                                 <h2>Courses</h2><?php
 
                                 the_field('courses');
@@ -77,21 +77,50 @@ if ( have_posts() ) :
 
                         ?>
                     </div>
-                    <div class="columns small-12 medium-4 large-4 rankings"><div class="rankings-wrap"><?php
+                    <div class="columns small-12 medium-4 large-4 right"><div class="taxonomy"><?php
+
+                        $department_terms = wp_get_post_terms( get_the_ID(), 'department' );
+                        if( !empty($department_terms) ){
+                            ?><h2>Departments</h2><p><?php
+                            foreach ($department_terms as $key => $value) {
+                                if($key > 0){
+                                    echo '<br>';
+                                }
+                                echo $value->name;
+                            }
+                            ?></p><?php
+                        }
+
+                        $degree_type_terms = wp_get_post_terms( get_the_ID(), 'degree-type' );
+                        if( !empty($degree_type_terms) ){
+                            ?><h2>Degree Types</h2><p><?php
+                            foreach ($degree_type_terms as $key => $value) {
+                                if($key > 0){
+                                    echo '<br>';
+                                }
+                                echo $value->name;
+                            }
+                            ?></p><?php
+                        }
+
+                        ?></div><?php
 
                         if( !empty( get_field('rankings') ) ){
 
-                            ?><h2>Rankings</h2><?php
+                            ?><div class="rankings-wrap"><h2>Rankings</h2><?php
 
                             the_field('rankings');
 
+                            ?></div><?php
+
                         }
 
-                    ?></div><?php if( !empty( get_field('advisor_link') ) ){
+                        if( !empty( get_field('advisor_link') ) ){
 
                         ?><div class="advisor-link-wrap"><a class="button" href="<?php the_field('advisor_link'); ?>"><span class="line1">Want to know more?</span><span class="line2">Contact an Advisor</span></a></div><?php
 
-                    } ?></div>
+                        }
+                    ?></div>
                 </div>
             </div>
         </article>

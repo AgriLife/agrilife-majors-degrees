@@ -11,15 +11,18 @@ class Templates {
 	private $post_type;
 	private $single_file;
 	private $archive_file;
+	private $search_file;
 
-	public function __construct( $posttype, $single, $archive ) {
+	public function __construct( $posttype, $single, $archive, $search ) {
 
 		$this->post_type = $posttype;
 		$this->single_file = $single;
 		$this->archive_file = $archive;
+		$this->search_file = $search;
 
 		add_filter( 'archive_template', array( $this, 'get_archive_template' ) );
 		add_filter( 'single_template', array( $this, 'get_single_template' ) );
+		add_filter( 'search_template', array( $this, 'get_search_template' ) );
 
 	}
 
@@ -54,6 +57,21 @@ class Templates {
 		}
 
 		return $single_template;
+
+	}
+
+	/**
+	 * Shows the single template when needed
+	 * @param  string $single_template The default single template
+	 * @return string                  The correct single template
+	 */
+	public function get_search_template( $search_template ) {
+
+		if ( get_query_var( 'post_type' ) == $this->post_type ) {
+			$search_template = AG_MAJDEG_TEMPLATE_PATH . '/' . $this->archive_file;
+		}
+
+		return $search_template;
 
 	}
 
