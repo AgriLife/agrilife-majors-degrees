@@ -83,40 +83,6 @@
                 "toolbar": "full",
                 "media_upload": 0,
                 "delay": 0
-            },
-            {
-                "key": "field_5ad9febe0f800",
-                "label": "Rankings",
-                "name": "rankings",
-                "type": "wysiwyg",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "tabs": "all",
-                "toolbar": "full",
-                "media_upload": 0,
-                "delay": 0
-            },
-            {
-                "key": "field_5afb4680f3f66",
-                "label": "Advisor Link",
-                "name": "advisor_link",
-                "type": "link",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "return_format": "url"
             }
         ],
         "location": [
