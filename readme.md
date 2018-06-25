@@ -5,27 +5,27 @@ This plugin adds the "Majors and Degrees" custom post type and related shortcode
 ## Post
 
 ### Custom Fields
-* Header Image
+**Header Image**
 Image above the main post content. Minimum width 1024px, maximum height 340px.
 
-* About the Degree
+**About the Degree**
 Description of the degree.
 
-* Careers
+**Careers**
 Careers related to the degree.
 
-* Courses
+**Courses**
 Course requirements for the degree.
 
 
 ### Taxonomies
-* Department
+**Department**
 This taxonomy identifies the name, ranking, and contact information of the department. This information is displayed in the right column of a degree's single post page.
 
-* Degree Type
-This taxonomy identifies the type of degree (Major, Minor, Certificate, etc). This information is displayed in the right column of a degree's single post page.
+**Degree Type**
+This taxonomy identifies the type of degree (Major, Minor, Certificate, etc).
 
-* Keyword
+**Keyword**
 This taxonomy identifies different words a visitor might associate with the degree. They are used by the search form shortcode.
 
 
