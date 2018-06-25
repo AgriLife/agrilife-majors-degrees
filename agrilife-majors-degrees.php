@@ -37,7 +37,8 @@ add_action( 'init', function(){
       ),
       array(
         'name' => 'Contact Info',
-        'slug' => 'contact'
+        'slug' => 'contact',
+        'type' => 'link'
       )
     )
   );

@@ -1,6 +1,4 @@
 <?php
- /*Template Name: Research Project
- */
 
 // Queue assets
 add_action( 'wp_enqueue_scripts', 'mjd_project_register' );
@@ -27,6 +25,7 @@ function mjd_project_enqueue(){
 get_header();
 if ( have_posts() ) :
     while ( have_posts() ) : the_post();
+
 ?>
 <div id="primary">
     <div id="content" role="main">
@@ -80,6 +79,8 @@ if ( have_posts() ) :
                     <div class="columns small-12 medium-4 large-4 right"><div class="taxonomy"><?php
 
                         $department_terms = wp_get_post_terms( get_the_ID(), 'department' );
+                        $dept_ids = array();
+
                         if( !empty($department_terms) ){
                             ?><h2>Departments</h2><p><?php
                             foreach ($department_terms as $key => $value) {
@@ -87,8 +88,19 @@ if ( have_posts() ) :
                                     echo '<br>';
                                 }
                                 echo $value->name;
+                                $dept_ids[] = $value->term_id;
                             }
                             ?></p><?php
+                        }
+
+                        if( !empty( $dept_ids ) ){
+
+                            ?><h2>Ranking</h2><?php
+
+                            foreach ($dept_ids as $key => $value) {
+                                echo htmlspecialchars_decode( get_option("taxonomy_{$value}_ranking") );
+                            }
+
                         }
 
                         $degree_type_terms = wp_get_post_terms( get_the_ID(), 'degree-type' );
@@ -105,19 +117,13 @@ if ( have_posts() ) :
 
                         ?></div><?php
 
-                        if( !empty( get_field('rankings') ) ){
+                        $contact = get_option('taxonomy_' . $dept_ids[0] . '_contact');
 
-                            ?><div class="rankings-wrap"><h2>Rankings</h2><?php
+                        if( !empty( $contact ) ){
 
-                            the_field('rankings');
-
-                            ?></div><?php
-
-                        }
-
-                        if( !empty( get_field('advisor_link') ) ){
-
-                        ?><div class="advisor-link-wrap"><a class="button" href="<?php the_field('advisor_link'); ?>"><span class="line1">Want to know more?</span><span class="line2">Contact an Advisor</span></a></div><?php
+                            ?><div class="advisor-link-wrap"><a class="button" href="<?php
+                                echo htmlspecialchars_decode( $contact );
+                            ?>"><span class="line1">Want to know more?</span><span class="line2">Contact an Advisor</span></a></div><?php
 
                         }
                     ?></div>

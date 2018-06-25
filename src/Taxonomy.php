@@ -98,10 +98,22 @@ class Taxonomy {
 
           $value = htmlspecialchars_decode( $term_meta ) ? htmlspecialchars_decode( $term_meta ) : '';
 
-          if( $meta['type'] == 'full' ){
-          	wp_editor( $value, 'term_meta_' . $slug, array( 'textarea_name' => 'term_meta_' . $slug ) );
-          } else {
-          	?><input type="text" name="term_meta_<?php echo $slug; ?>" id="term_meta_<?php echo $slug; ?>" value="<?php echo $value; ?>"><?php
+
+          switch ($meta['type']) {
+          	case 'full':
+          		wp_editor( $value, 'term_meta_' . $slug, array(
+          			'textarea_name' => 'term_meta_' . $slug,
+          			'wpautop' => false
+          		) );
+          		break;
+
+          	case 'link':
+          		?><input type="url" name="term_meta_<?php echo $slug; ?>" id="term_meta_<?php echo $slug; ?>" value="<?php echo $value; ?>" placeholder="https://example.com" pattern="http[s]?://.*"><?php
+          		break;
+
+          	default:
+          		?><input type="text" name="term_meta_<?php echo $slug; ?>" id="term_meta_<?php echo $slug; ?>" value="<?php echo $value; ?>"><?php
+          		break;
           }
 
           ?>
