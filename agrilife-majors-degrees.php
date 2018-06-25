@@ -28,6 +28,17 @@ add_action( 'init', function(){
     'Department', 'department', 'majors-and-degrees', 'agmd',
     array(
       'hierarchical' => false
+    ),
+    array(
+      array(
+        'name' => 'Ranking',
+        'slug' => 'ranking',
+        'type' => 'full'
+      ),
+      array(
+        'name' => 'Contact Info',
+        'slug' => 'contact'
+      )
     )
   );
 
