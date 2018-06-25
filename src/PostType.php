@@ -17,7 +17,7 @@ class PostType {
    * @array $supports
    * @return void
    */
-	public function __construct( $name, $slug, $tag, $taxonomies = array( 'category', 'post_tags' ), $icon = 'dashicons-portfolio', $supports = array( 'title' ) ) {
+	public function __construct( $name, $slug, $tag, $taxonomies = array( 'category', 'post_tag' ), $icon = 'dashicons-portfolio', $supports = array( 'title' ) ) {
 
 		$singular = $name;
 		$plural = $name . 's';
