@@ -93,17 +93,18 @@ if ( have_posts() ) :
                             ?></p><?php
                         }
 
-                        if( !empty( $dept_ids ) ){
+                        $ranking = get_option('taxonomy_' . $dept_ids[0] . '_ranking');
+
+                        if( !empty( $ranking ) ){
 
                             ?><h2>Ranking</h2><?php
 
-                            foreach ($dept_ids as $key => $value) {
-                                echo htmlspecialchars_decode( get_option("taxonomy_{$value}_ranking") );
-                            }
+                            echo htmlspecialchars_decode( $ranking );
 
                         }
 
                         $degree_type_terms = wp_get_post_terms( get_the_ID(), 'degree-type' );
+
                         if( !empty($degree_type_terms) ){
                             ?><h2>Degree Types</h2><p><?php
                             foreach ($degree_type_terms as $key => $value) {
