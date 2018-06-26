@@ -1,6 +1,6 @@
 <?php
 /**
- * The Template for displaying all majors and degrees archives
+ * The Template for displaying all keyword taxonomy posts
  */
 
 // Queue styles
@@ -29,8 +29,11 @@ get_header();
 
 ?>
 <div class="content-sidebar-wrap">
-	<main class="content">
-		<h1 class="entry-title"><a href="<?php echo get_post_type_archive_link( 'majors-and-degrees' ); ?>">Majors and Degrees Archive</a></h1><?php
+	<main id="genesis-content" class="content">
+		<h1 class="entry-title"><a href="<?php echo get_post_type_archive_link( 'majors-and-degrees' ); ?>">Majors and Degrees tagged "<?php
+		  $taxonomy = get_queried_object();
+		  echo $taxonomy->name;
+	  ?>"</a></h1><?php
 
 		if( have_posts() ) :
 			while( have_posts() ) : the_post();
@@ -65,9 +68,9 @@ get_header();
 
 	</main><!-- #content -->
 
-</div><!-- #wrap -->
+	<?php get_sidebar(); ?>
 
-<?php get_sidebar(); ?>
+</div><!-- #wrap -->
 
 <?php get_footer(); ?>
 

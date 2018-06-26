@@ -52,9 +52,9 @@ add_action( 'init', function(){
 
   $taxonomy_keyword = new \AgriLife\MajorsDegrees\Taxonomy(
     'Keyword', 'keyword', 'majors-and-degrees', 'agmd',
-    array(
-      'hierarchical' => false
-    )
+    array('hierarchical' => false),
+    array(),
+    AG_MAJDEG_TEMPLATE_PATH . '/taxonomy-keyword.php'
   );
 
   $post_type = new \AgriLife\MajorsDegrees\PostType(

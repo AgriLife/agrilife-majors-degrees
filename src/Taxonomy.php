@@ -9,11 +9,12 @@ class Taxonomy {
 
 	protected $slug;
 	protected $meta_boxes = array();
+	protected $template;
 
 	/**
 	 * Builds and registers the custom taxonomy
 	 */
-	public function __construct($name, $slug, $post_slug, $tag, $user_args = array(), $meta = array()) {
+	public function __construct($name, $slug, $post_slug, $tag, $user_args = array(), $meta = array(), $template = '') {
 
 		$this->slug = $slug;
 
@@ -50,6 +51,7 @@ class Taxonomy {
 		// Register the Type taxonomy
 		register_taxonomy( $slug, $post_slug, $args );
 
+		// Create taxonomy custom fields
 		if( !empty($meta) ){
 			if( !is_array($meta[0]) ){
 				$this->add_meta_box($meta);
@@ -60,6 +62,12 @@ class Taxonomy {
 					$this->meta_boxes[] = $value;
 				}
 			}
+		}
+
+		// Add custom template for post taxonomies
+		if( !empty( $template ) ){
+			$this->template = $template;
+			add_filter( 'template_include', array( $this, 'custom_template' ) );
 		}
 
 	}
@@ -96,8 +104,7 @@ class Taxonomy {
         <td>
           <?php
 
-          $value = htmlspecialchars_decode( $term_meta ) ? htmlspecialchars_decode( $term_meta ) : '';
-
+          $value = $term_meta ? $term_meta : '';
 
           switch ($meta['type']) {
           	case 'full':
@@ -130,13 +137,24 @@ class Taxonomy {
   		$slug = $meta['slug'];
 	    if ( isset( $_POST['term_meta_' . $slug] ) ) {
 	      $t_id = $term_id;
-	      $value = esc_html($_POST['term_meta_' . $slug]);
+	      $value = $_POST['term_meta_' . $slug];
 	      // Save the option array.
 	      update_option( "taxonomy_{$t_id}_{$slug}", $value );
 	    }
 
   	}
 
+  }
+
+  public function custom_template( $template ){
+
+  	if( is_tax('keyword') ){
+
+  		return $this->template;
+
+  	}
+
+  	return $template;
   }
 
 }
