@@ -10,14 +10,22 @@ class PostsShortcode {
 	protected $post_type;
 	protected $template;
 	protected $atts;
+	protected $taxonomy;
 	protected $name = 'display_';
 
 	public function __construct( $posttype, $template, $atts = array() ) {
 
 		$this->post_type = $posttype;
 		$this->template = $template;
-		$this->atts = $atts;
 		$this->name .= str_replace('-', '_', $this->post_type);
+
+		if( !empty( $atts ) ){
+			$this->taxonomy = $atts;
+			$this->atts = array();
+			foreach ($atts as $key => $value) {
+				$this->atts[$key] = '';
+			}
+		}
 
 		add_shortcode( $this->name, array( $this, 'display_posts_shortcode' ) );
 
@@ -30,10 +38,9 @@ class PostsShortcode {
 	 */
 	public function display_posts_shortcode( $atts ) {
 
-
 		extract( shortcode_atts( $this->atts, $atts ));
 
-		$posts = Shortcode_Query::get_posts( $this->post_type, $atts );
+		$posts = Post_Query::get_posts( $this->post_type, $atts, $this->taxonomy );
 
 		ob_start();
 

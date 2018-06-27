@@ -70,10 +70,23 @@ add_action( 'init', function(){
     'majors-and-degrees',
     AG_MAJDEG_TEMPLATE_PATH . '/shortcode-posts.php',
     array(
-      'departments'   => '',
-      'degree_types' => '',
-      'keywords' => ''
-    ) );
+      'departments' => array(
+        'default' => '',
+        'taxonomy' => 'department',
+        'field' => 'slug'
+      ),
+      'degree_types' => array(
+        'default' => '',
+        'taxonomy' => 'degree-type',
+        'field' => 'slug'
+      ),
+      'keywords' => array(
+        'default' => '',
+        'taxonomy' => 'keyword',
+        'field' => 'slug'
+      )
+    )
+  );
 
   $search_posts_shortcode = new \AgriLife\MajorsDegrees\SearchFormShortcode(
     'majors-and-degrees',
