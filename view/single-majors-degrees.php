@@ -99,7 +99,11 @@ if ( have_posts() ) :
 
                             ?><h2>Ranking</h2><?php
 
-                            echo htmlspecialchars_decode( $ranking );
+
+                            $ranking = $ranking ? stripslashes( $ranking ) : '';
+                            $ranking = html_entity_decode( $ranking );
+
+                            echo $ranking;
 
                         }
 

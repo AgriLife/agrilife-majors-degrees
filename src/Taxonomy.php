@@ -104,7 +104,8 @@ class Taxonomy {
         <td>
           <?php
 
-          $value = $term_meta ? $term_meta : '';
+          $value = $term_meta ? stripslashes( $term_meta ) : '';
+          $value = html_entity_decode( $value );
 
           switch ($meta['type']) {
           	case 'full':
@@ -134,12 +135,18 @@ class Taxonomy {
   public function save_taxonomy_custom_meta( $term_id ) {
 
   	foreach ($this->meta_boxes as $key => $meta) {
+
   		$slug = $meta['slug'];
+
 	    if ( isset( $_POST['term_meta_' . $slug] ) ) {
+
 	      $t_id = $term_id;
 	      $value = $_POST['term_meta_' . $slug];
+	      $value = sanitize_text_field( htmlentities( $value ) );
+
 	      // Save the option array.
 	      update_option( "taxonomy_{$t_id}_{$slug}", $value );
+
 	    }
 
   	}
