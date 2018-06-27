@@ -1,4 +1,11 @@
 <?php
+
+	// Enqueue scripts
+	wp_enqueue_script( 'majors-degrees-search' );
+
+	// Output search data as javascript object
+?><script><?php
+
 	$search_terms = get_search_query();
 
 	$mjdq = new WP_Query(array(
@@ -33,8 +40,15 @@
 
 	$mjd_js_urls = implode(', ', $mjd_js_urls);
 
+	?>
 
-?>
+	if(!ag_mjd){
+		var ag_mjd = {};
+	}
+	ag_mjd.availableTags = [<?php echo $mjd_js_slugs; ?>];
+	ag_mjd.tagLinks = {<?php echo $mjd_js_urls; ?>};
+
+</script>
 <div class="majors-degrees-search-form">
 	<label for="searchforminput">
 		<h4>Search Majors and Degrees</h4>
@@ -45,47 +59,4 @@
 		?>
 		<p class="majors-degrees-search-form-message" style="color:red"></p>
 	</form>
-	<script type="text/javascript">
-		jQuery(document).ready(function() {
-
-			var availableTags = [<?php echo $mjd_js_slugs; ?>];
-
-			if( availableTags.length > 0){
-				jQuery('.majors-degrees-search-form-message').hide().html('Terms not found');
-
-				jQuery( '#searchforminput' ).autocomplete({
-					source: availableTags,
-					change: function( event, ui ){
-						var tag = jQuery( '#searchforminput' ).val(),
-								link = tagLinks[tag];
-
-						if(link) {
-							jQuery('.majors-degrees-search-form-message').hide();
-						}
-					},
-					focus: function( event, ui ){
-						jQuery('.majors-degrees-search-form-message').hide();
-					}
-				});
-
-				jQuery('form.majors-degrees-searchform').on('submit', function(e){
-
-					e.preventDefault();
-
-					var tagLinks = {<?php echo $mjd_js_urls; ?>},
-							tag = jQuery( '#searchforminput' ).val(),
-							link = tagLinks[tag];
-
-					if(link){
-						jQuery('.majors-degrees-search-form-message').hide();
-						document.location.href = link;
-					} else {
-						jQuery('.majors-degrees-search-form-message').show();
-					}
-
-				});
-
-			}
-		});
-	</script>
 </div>

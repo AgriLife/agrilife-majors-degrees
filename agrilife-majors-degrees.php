@@ -75,6 +75,17 @@ add_action( 'init', function(){
       'keywords' => ''
     ) );
 
-  $search_posts_shortcode = new \AgriLife\MajorsDegrees\SearchFormShortcode( 'majors-and-degrees', AG_MAJDEG_TEMPLATE_PATH . '/search-majors-degrees.php');
+  $search_posts_shortcode = new \AgriLife\MajorsDegrees\SearchFormShortcode(
+    'majors-and-degrees',
+    AG_MAJDEG_TEMPLATE_PATH . '/shortcode-search-form.php',
+    array(),
+    array(
+      'handle' => 'majors-degrees-search',
+      'src' => AG_MAJDEG_DIR_URL . 'js/search-form.js',
+      'deps' => array('jquery-ui-autocomplete'),
+      'ver' => filemtime(AG_MAJDEG_DIR_PATH . 'js/search-form.js'),
+      'in_footer' => true
+    )
+  );
 
 });
