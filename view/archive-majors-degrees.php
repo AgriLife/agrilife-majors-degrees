@@ -9,19 +9,19 @@ add_action( 'wp_enqueue_scripts', 'mjd_project_enqueue_styles' );
 
 function mjd_project_register_styles(){
 
-    wp_register_style(
-        'extension-majors-degrees-styles',
-        AG_MAJDEG_DIR_URL . 'css/majors-degrees.css',
-        array(),
-        '',
-        'screen'
-    );
+	wp_register_style(
+		'ag-majors-degrees-styles',
+		AG_MAJDEG_DIR_URL . 'css/majors-degrees.css',
+		array(),
+		filemtime(AG_MAJDEG_DIR_PATH . 'css/majors-degrees.css'),
+		'screen'
+	);
 
 }
 
 function mjd_project_enqueue_styles(){
 
-    wp_enqueue_style( 'extension-majors-degrees-styles' );
+	wp_enqueue_style( 'ag-majors-degrees-styles' );
 
 }
 
