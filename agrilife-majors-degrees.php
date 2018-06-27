@@ -54,7 +54,7 @@ add_action( 'init', function(){
     'Keyword', 'keyword', 'majors-and-degrees', 'agmd',
     array('hierarchical' => false),
     array(),
-    AG_MAJDEG_TEMPLATE_PATH . '/taxonomy-keyword.php'
+    AG_MAJDEG_TEMPLATE_PATH . '/archive-taxonomy.php'
   );
 
   $post_type = new \AgriLife\MajorsDegrees\PostType(
@@ -68,7 +68,7 @@ add_action( 'init', function(){
 
   $display_posts_shortcode = new \AgriLife\MajorsDegrees\PostsShortcode(
     'majors-and-degrees',
-    AG_MAJDEG_TEMPLATE_PATH . '/shortcode-majors-degrees.php',
+    AG_MAJDEG_TEMPLATE_PATH . '/shortcode-posts.php',
     array(
       'departments'   => '',
       'degree_types' => '',
