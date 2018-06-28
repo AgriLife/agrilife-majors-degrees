@@ -2,9 +2,10 @@
 namespace AgriLife\MajorsDegrees;
 
 /**
- * Creates the shortcode to list posts. Can be filtered by taxonomy
+ * Create shortcode to list posts filtered by taxonomy
+ * @package AgriLife Majors and Degrees
+ * @since 1.0.0
  */
-
 class PostsShortcode {
 
 	protected $post_type;
@@ -13,20 +14,30 @@ class PostsShortcode {
 	protected $taxonomy;
 	protected $name = 'display_';
 
-	public function __construct( $posttype, $template, $atts = array() ) {
+	/**
+	 * Creates the shortcode
+	 * @param  string $posttype The post type slug
+	 * @param  string $template The path to the shortcode content template
+	 * @param  array  $taxonomy The taxonomy to use for post filtering via shortcode attributes
+	 * @return void
+	 */
+	public function __construct( $posttype, $template, $taxonomy = array() ) {
 
 		$this->post_type = $posttype;
 		$this->template = $template;
-		$this->name .= str_replace('-', '_', $this->post_type);
+		$this->name .= str_replace('-', '_', $posttype);
 
-		if( !empty( $atts ) ){
-			$this->taxonomy = $atts;
+		// Copy shortcode attributes from taxonomy to atts
+		if( !empty( $taxonomy ) ){
+			$this->taxonomy = $taxonomy;
 			$this->atts = array();
-			foreach ($atts as $key => $value) {
+			foreach ($taxonomy as $key => $value) {
+				// Set default value
 				$this->atts[$key] = '';
 			}
 		}
 
+		// Establish shortcode
 		add_shortcode( $this->name, array( $this, 'display_posts_shortcode' ) );
 
 	}
