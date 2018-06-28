@@ -40,7 +40,7 @@ class PostsShortcode {
 
 		extract( shortcode_atts( $this->atts, $atts ));
 
-		$posts = Post_Query::get_posts( $this->post_type, $atts, $this->taxonomy );
+		$posts = Shortcode_Post_Query::get_posts( $this->post_type, $atts, $this->taxonomy );
 
 		ob_start();
 
