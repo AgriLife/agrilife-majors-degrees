@@ -49,6 +49,18 @@
 	color: #5E554E;
 }
 
+.entry-content .about-the-degree h2.has-terms {
+	margin-bottom: 0;
+}
+
+.entry-content .about-the-degree .meta-terms {
+	margin-bottom: 0.5rem;
+}
+
+.entry-content .related-posts h2 {
+	margin-top: 1rem;
+}
+
 .entry-content .rankings-wrap h2 ~ * {
 	font-size: 1.1em;
 	hyphens: auto;

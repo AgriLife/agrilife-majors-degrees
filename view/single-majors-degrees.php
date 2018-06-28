@@ -25,6 +25,9 @@ function mjd_project_enqueue(){
 get_header();
 if ( have_posts() ) :
     while ( have_posts() ) : the_post();
+        $keyword_terms = wp_get_post_terms(get_the_ID(), 'keyword');
+        $department_terms = wp_get_post_terms( get_the_ID(), 'department' );
+        $degree_type_terms = wp_get_post_terms( get_the_ID(), 'degree-type' );
 
 ?>
 <div id="primary">
@@ -43,8 +46,66 @@ if ( have_posts() ) :
 
                         if( !empty( get_field('about_the_degree') ) ){
 
+                            $has_meta_terms = !empty($department_terms) || !empty( $degree_type_terms ) ? true : false;
+
                             ?><div class="about-the-degree">
-                                <h2>About The Degree</h2><?php
+                                <h2<?php
+                                // If has meta to show below the header, render class name.
+                                if( $has_meta_terms ){
+                                    echo ' class="has-terms"';
+                                }
+                                ?>>About The Degree</h2><?php
+
+                                // Show the meta
+                                if( $has_meta_terms ){
+
+                                    ?><div class="meta-terms"><?php
+
+                                    if( !empty($department_terms) ){
+
+                                        foreach ($department_terms as $key => $value){
+
+                                            $space = $key < 1 ? '' : ', ';
+
+                                            $dept = sprintf('%s<span>%s</span>',
+                                                $space,
+                                                $value->name
+                                            );
+
+                                            echo $dept;
+
+                                        }
+
+                                    }
+
+                                    if( !empty($degree_type_terms) ){
+
+                                        if( !empty( $department_terms ) ){
+
+                                            echo ', ';
+
+                                        }
+
+                                        foreach ($degree_type_terms as $key => $value){
+
+                                            $space = $key < 1 ? '' : ', ';
+
+                                            $deg = sprintf('%s<span>%s</span>',
+                                                $space,
+                                                $value->name
+                                            );
+
+                                            echo $deg;
+
+                                        }
+
+                                    }
+
+                                    ?></div><?php
+
+                                }
+
+                                ?><?php
 
                                 the_field('about_the_degree');
 
@@ -78,7 +139,6 @@ if ( have_posts() ) :
                     </div>
                     <div class="columns small-12 medium-4 large-4 right"><div class="taxonomy"><?php
 
-                        $department_terms = wp_get_post_terms( get_the_ID(), 'department' );
                         $dept_ids = array();
 
                         if( !empty($department_terms) ){
@@ -113,8 +173,6 @@ if ( have_posts() ) :
 
                         }
 
-                        $degree_type_terms = wp_get_post_terms( get_the_ID(), 'degree-type' );
-
                         if( !empty($degree_type_terms) ){
                             ?><h2>Degree Types</h2><p><?php
                             foreach ($degree_type_terms as $key => $value) {
@@ -136,6 +194,46 @@ if ( have_posts() ) :
                                 echo htmlspecialchars_decode( $contact );
                             ?>"><span class="line1">Want to know more?</span><span class="line2">Contact an Advisor</span></a></div><?php
 
+                        }
+
+                        // Add related posts
+                        $tax_query = array(
+                            'taxonomy' => 'keyword',
+                            'field'    => 'slug',
+                            'terms'    => array()
+                        );
+
+                        foreach ($keyword_terms as $key => $term) {
+                            $tax_query['terms'][] = $term->slug;
+                        }
+
+                        $related_query_args = array(
+                            'post_type'          => 'majors-and-degrees',
+                            'post_status'        => 'any',
+                            'posts_per_page'     => -1,
+                            'orderby'            => 'title',
+                            'order'              => 'ASC',
+                            'tax_query'          => $tax_query
+                        );
+
+                        $related_query = new WP_Query( $related_query_args );
+
+                        if( $related_query->have_posts() ){
+
+                            echo '<div class="related-posts"><h2>Related Posts</h2>';
+                            $output = array();
+
+                            foreach ($related_query->posts as $key => $post) {
+
+                                $output[] = sprintf('<a href="%s">%s</a>',
+                                    get_permalink( $post->ID ),
+                                    $post->post_title
+                                );
+
+                            }
+
+                            echo implode(', ', $output);
+                            echo '</div>';
                         }
                     ?></div>
                 </div>
