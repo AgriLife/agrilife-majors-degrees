@@ -20,12 +20,16 @@ define( 'AG_MAJDEG_TEMPLATE_PATH', AG_MAJDEG_DIR_PATH . 'view' );
 
 add_action( 'init', function(){
 
+  $post_type_slug = 'majors-and-degrees';
+  $namespace = 'agmjd';
+
   if ( class_exists( 'Acf' ) ) {
     require_once(AG_MAJDEG_DIR_PATH . 'fields/majors-degrees-details.php');
   }
 
+  // Add taxonomies
   $taxonomy_department = new \AgriLife\MajorsDegrees\Taxonomy(
-    'Department', 'department', 'majors-and-degrees', 'agmd',
+    'Department', 'department', $post_type_slug, $namespace,
     array(
       'hierarchical' => false
     ),
@@ -40,34 +44,42 @@ add_action( 'init', function(){
         'slug' => 'contact',
         'type' => 'link'
       )
-    )
+    ),
+    AG_MAJDEG_TEMPLATE_PATH . '/archive-taxonomy.php'
   );
 
   $taxonomy_degree_type = new \AgriLife\MajorsDegrees\Taxonomy(
-    'Degree Type', 'degree-type', 'majors-and-degrees', 'agmd',
+    'Degree Type', 'degree-type', $post_type_slug, $namespace,
     array(
       'hierarchical' => false
-    )
-  );
-
-  $taxonomy_keyword = new \AgriLife\MajorsDegrees\Taxonomy(
-    'Keyword', 'keyword', 'majors-and-degrees', 'agmd',
-    array('hierarchical' => false),
+    ),
     array(),
     AG_MAJDEG_TEMPLATE_PATH . '/archive-taxonomy.php'
   );
 
+  $taxonomy_keyword = new \AgriLife\MajorsDegrees\Taxonomy(
+    'Keyword', 'keyword', $post_type_slug, $namespace,
+    array(
+      'hierarchical' => false
+    ),
+    array(),
+    AG_MAJDEG_TEMPLATE_PATH . '/archive-taxonomy.php'
+  );
+
+  // Add custom post type
   $post_type = new \AgriLife\MajorsDegrees\PostType(
-    'Majors and Degrees', 'majors-and-degrees', 'agmd', array('department', 'degree-type', 'keyword'), 'dashicons-portfolio',
+    'Majors and Degrees', $post_type_slug, $namespace, array('department', 'degree-type', 'keyword'), 'dashicons-portfolio',
     array(
       'title', 'editor', 'thumbnail', 'revisions', 'genesis-seo', 'genesis-layouts', 'genesis-scripts'
     )
   );
 
-  $post_template = new \AgriLife\MajorsDegrees\Templates( 'majors-and-degrees', 'single-majors-degrees.php', 'archive-majors-degrees.php', 'search-majors-degrees.php' );
+  // Add custom post type templates
+  $post_template = new \AgriLife\MajorsDegrees\Templates( $post_type_slug, 'single-majors-degrees.php', 'archive-majors-degrees.php', 'search-majors-degrees.php' );
 
+  // Add custom post type list shortcode
   $display_posts_shortcode = new \AgriLife\MajorsDegrees\PostsShortcode(
-    'majors-and-degrees',
+    $post_type_slug,
     AG_MAJDEG_TEMPLATE_PATH . '/shortcode-posts.php',
     array(
       'departments' => array(
@@ -88,8 +100,9 @@ add_action( 'init', function(){
     )
   );
 
+  // Add custom post type search shortcode
   $search_posts_shortcode = new \AgriLife\MajorsDegrees\SearchFormShortcode(
-    'majors-and-degrees',
+    $post_type_slug,
     AG_MAJDEG_TEMPLATE_PATH . '/shortcode-search-form.php',
     array(),
     array(
