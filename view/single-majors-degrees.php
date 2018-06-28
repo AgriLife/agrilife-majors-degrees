@@ -87,7 +87,13 @@ if ( have_posts() ) :
                                 if($key > 0){
                                     echo '<br>';
                                 }
-                                echo $value->name;
+                                $dept = $value->name;
+                                $link = get_option('taxonomy_' . $value->term_id . '_department-page');
+                                if( !empty( $link ) ){
+                                    $dept = '<a href="' . $link . '">' . $dept . '</a>';
+                                }
+
+                                echo $dept;
                                 $dept_ids[] = $value->term_id;
                             }
                             ?></p><?php

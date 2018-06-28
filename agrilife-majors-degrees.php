@@ -43,6 +43,11 @@ add_action( 'init', function(){
         'name' => 'Contact Info',
         'slug' => 'contact',
         'type' => 'link'
+      ),
+      array(
+        'name' => 'Department Page',
+        'slug' => 'department-page',
+        'type' => 'link'
       )
     ),
     AG_MAJDEG_TEMPLATE_PATH . '/archive-taxonomy.php'
