@@ -19,7 +19,8 @@ class SearchFormShortcode {
 	 * @param  string $posttype The post type slug
 	 * @param  string $template The path to the shortcode content template
 	 * @param  array  $atts     The shortcode attributes
-	 * @param  array  $js       The javascript files to register
+	 * @param  array  $js       Array (single or multidimensional) of the javascript files to register.
+	 *                          Accepts arguments found in WordPress core wp_register_script function.
 	 * @return void
 	 */
 	public function __construct( $posttype, $template, $atts = array(), $js = array() ) {

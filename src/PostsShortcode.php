@@ -16,9 +16,13 @@ class PostsShortcode {
 
 	/**
 	 * Creates the shortcode
-	 * @param  string $posttype The post type slug
-	 * @param  string $template The path to the shortcode content template
-	 * @param  array  $taxonomy The taxonomy to use for post filtering via shortcode attributes
+	 * @param string $posttype The post type slug
+	 * @param string $template The path to the shortcode content template
+	 * @param array  $taxonomy The taxonomy to use for post filtering via shortcode attributes. Accepts
+	 *                          'default', 'taxonomy', and 'field'. Default is the default shortcode
+	 *                          attribute value. Taxonomy is the taxonomy slug. Field is the attribute of
+	 *                          the taxonomy to select by (Possible values are 'term_id', 'name', 'slug',
+	 *                          or 'term_taxonomy_id').
 	 * @return void
 	 */
 	public function __construct( $posttype, $template, $taxonomy = array() ) {

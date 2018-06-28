@@ -2,16 +2,21 @@
 namespace AgriLife\MajorsDegrees;
 
 /**
- * Static methods for often-used queries
+ * Get posts for shortcode by post type and taxonomy
  * @package AgriLife Majors and Degrees
  * @since 1.0.0
  */
 class Shortcode_Post_Query {
 
 	/**
-	 * Queries for people with some smart defaults
-	 * @param	 string $type	  The type taxonomy slug to filter (optional)
-	 * @param	 string $search The search term (optional)
+	 * Queries for the custom post list shortcode
+	 * @param	string $post_type The slug for the custom post type
+	 * @param	array  $atts      The shortcode attributes in use
+	 * @param array  $taxonomy  The taxonomy to use for post filtering via shortcode attributes. Accepts
+	 *                          'default', 'taxonomy', and 'field'. Default is the default shortcode
+	 *                          attribute value. Taxonomy is the taxonomy slug. Field is the attribute of
+	 *                          the taxonomy to select by (Possible values are 'term_id', 'name', 'slug',
+	 *                          or 'term_taxonomy_id').
 	 * @return object				  A WP_Query object with the results
 	 */
 	public static function get_posts( $post_type = 'posts', $atts = array(), $taxonomy = array() ) {

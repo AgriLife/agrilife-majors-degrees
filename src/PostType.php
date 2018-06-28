@@ -2,22 +2,24 @@
 namespace AgriLife\MajorsDegrees;
 
 /**
- * Builds and registers a custom post type
+ * Builds and registers a custom post type.
  * @package AgriLife Majors and Degrees
  * @since 1.0.0
  */
 class PostType {
 
-  /**
-   * Dequeues global styles
-   * @since 1.1.0
-   * @string $name
-   * @array $taxonomy
-   * @string $tag
-   * @string $icon
-   * @array $supports
-   * @return void
-   */
+	/**
+	 * Builds and registers the custom taxonomy.
+	 * @param  string $name       The post type name.
+	 * @param  string $slug       The post type slug.
+	 * @param  string $tag        The namespace of the plugin for translation purposes.
+	 * @param  array  $taxonomies The taxonomies this post type supports. Accepts arguments found in
+	 *                            WordPress core register_post_type function.
+	 * @param  string $icon       The icon used in the admin navigation sidebar.
+	 * @param  array  $supports   The attributes this post type supports. Accepts arguments found in
+	 *                            WordPress core register_post_type function.
+	 * @return void
+	 */
 	public function __construct( $name, $slug, $tag, $taxonomies = array( 'category', 'post_tag' ), $icon = 'dashicons-portfolio', $supports = array( 'title' ) ) {
 
 		$singular = $name;

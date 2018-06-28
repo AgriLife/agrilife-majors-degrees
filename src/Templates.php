@@ -13,6 +13,14 @@ class Templates {
 	private $archive_file;
 	private $search_file;
 
+	/**
+	 * Adds custom post type templates for different contexts
+	 * @param  string $posttype The slug for the custom post type
+	 * @param  string $single   The single template
+	 * @param  string $archive  The archive template
+	 * @param  string $search   The search page template
+	 * @return void
+	 */
 	public function __construct( $posttype, $single, $archive, $search ) {
 
 		$this->post_type = $posttype;
@@ -20,8 +28,8 @@ class Templates {
 		$this->archive_file = $archive;
 		$this->search_file = $search;
 
-		add_filter( 'archive_template', array( $this, 'get_archive_template' ) );
 		add_filter( 'single_template', array( $this, 'get_single_template' ) );
+		add_filter( 'archive_template', array( $this, 'get_archive_template' ) );
 		add_filter( 'search_template', array( $this, 'get_search_template' ) );
 
 	}
