@@ -3,8 +3,9 @@ namespace AgriLife\MajorsDegrees;
 
 /**
  * Creates the shortcode to list posts. Can be filtered by taxonomy
+ * @package AgriLife Majors and Degrees
+ * @since 1.0.0
  */
-
 class SearchFormShortcode {
 
 	protected $post_type;
@@ -13,6 +14,14 @@ class SearchFormShortcode {
 	protected $name = 'search_form_';
 	protected $js = array();
 
+	/**
+	 * Creates the shortcode
+	 * @param  string $posttype The post type slug
+	 * @param  string $template The path to the shortcode content template
+	 * @param  array  $atts     The shortcode attributes
+	 * @param  array  $js       The javascript files to register
+	 * @return void
+	 */
 	public function __construct( $posttype, $template, $atts = array(), $js = array() ) {
 
 		$this->post_type = $posttype;

@@ -3,8 +3,9 @@ namespace AgriLife\MajorsDegrees;
 
 /**
  * Builds and registers a custom post type
+ * @package AgriLife Majors and Degrees
+ * @since 1.0.0
  */
-
 class PostType {
 
   /**

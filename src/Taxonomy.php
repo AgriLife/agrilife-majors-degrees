@@ -3,8 +3,9 @@ namespace AgriLife\MajorsDegrees;
 
 /**
  * Builds and registers a custom taxonomy
+ * @package AgriLife Majors and Degrees
+ * @since 1.0.0
  */
-
 class Taxonomy {
 
 	protected $slug;
@@ -13,6 +14,14 @@ class Taxonomy {
 
 	/**
 	 * Builds and registers the custom taxonomy
+	 * @param  string $name      The taxonomy name
+	 * @param  string $slug      The taxonomy slug
+	 * @param  string $post_slug The slug of the post type where the taxonomy will be added
+	 * @param  string $tag       The plugin namespace for translations
+	 * @param  array  $user_args The arguments for taxonomy registration
+	 * @param  array  $meta      The custom fields to add to a taxonomy item edit page
+	 * @param  string $template  The template file path for the taxonomy archive page
+	 * @return void
 	 */
 	public function __construct($name, $slug, $post_slug, $tag, $user_args = array(), $meta = array(), $template = '') {
 
@@ -52,16 +61,16 @@ class Taxonomy {
 		register_taxonomy( $slug, $post_slug, $args );
 
 		// Create taxonomy custom fields
+		// Ensure meta is an array of one or more arrays
 		if( !empty($meta) ){
 			if( !is_array($meta[0]) ){
-				$this->add_meta_box($meta);
 				$this->meta_boxes[] = $meta;
 			} else {
 				foreach ($meta as $key => $value) {
-					$this->add_meta_box($value);
 					$this->meta_boxes[] = $value;
 				}
 			}
+			$this->add_meta_box();
 		}
 
 		// Add custom template for post taxonomies
@@ -72,27 +81,25 @@ class Taxonomy {
 
 	}
 
-	/*
-		Add a meta box to the taxonomy
-		$name - string
-		$slug - string
-		$type - string: full (default), input
-
-		Partial credit: https://pippinsplugins.com/adding-custom-meta-fields-to-taxonomies/
-	*/
-	public function add_meta_box( $meta ){
-		$this->meta_name = $meta['name'];
-		$this->meta_slug = $meta['slug'];
-
+	/**
+	 * Add actions to render and save custom fields
+	 * @return void
+	 */
+	public function add_meta_box(){
   	add_action( "{$this->slug}_edit_form_fields", array($this, 'taxonomy_edit_meta_field'), 10, 2 );
 	  add_action( "edited_{$this->slug}", array($this, 'save_taxonomy_custom_meta'), 10, 2 );
 	}
 
-  // Edit term page
-  public function taxonomy_edit_meta_field($term) {
+	/**
+	 * Render custom fields
+	 * @param object $term     Current taxonomy term object
+	 * @param string $taxonomy Current taxonomy slug
+	 * @return void
+	 */
+  public function taxonomy_edit_meta_field( $tag, $taxonomy ) {
 
     // put the term ID into a variable
-    $t_id = $term->term_id;
+    $t_id = $tag->term_id;
 
     foreach ($this->meta_boxes as $key => $meta) {
 	    // retrieve the existing value(s) for this meta field. This returns an array
@@ -131,8 +138,13 @@ class Taxonomy {
     }
   }
 
-  // Save extra taxonomy fields callback function.
-  public function save_taxonomy_custom_meta( $term_id ) {
+	/**
+	 * Save custom fields
+	 * @param int $term_id The term ID
+	 * @param int $tt_id   The term taxonomy ID
+	 * @return void
+	 */
+  public function save_taxonomy_custom_meta( $term_id, $tt_id ) {
 
   	foreach ($this->meta_boxes as $key => $meta) {
 
@@ -153,9 +165,14 @@ class Taxonomy {
 
   }
 
+	/**
+	 * Use custom template file if on the taxonomy archive page
+	 * @param string $template The path of the template to include
+	 * @return string
+	 */
   public function custom_template( $template ){
 
-  	if( is_tax('keyword') ){
+  	if( is_tax( $this->slug ) ){
 
   		return $this->template;
 
