@@ -55,6 +55,12 @@
 
 .entry-content .about-the-degree .meta-terms {
 	margin-bottom: 0.5rem;
+	font-weight: bold;
+}
+
+.entry-content .related-posts {
+	white-space: pre-wrap;
+	hyphens: auto;
 }
 
 .entry-content .related-posts h2 {

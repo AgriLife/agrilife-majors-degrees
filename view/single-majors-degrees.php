@@ -61,41 +61,41 @@ if ( have_posts() ) :
 
                                     ?><div class="meta-terms"><?php
 
-                                    if( !empty($department_terms) ){
-
-                                        foreach ($department_terms as $key => $value){
-
-                                            $space = $key < 1 ? '' : ', ';
-
-                                            $dept = sprintf('%s<span>%s</span>',
-                                                $space,
-                                                $value->name
-                                            );
-
-                                            echo $dept;
-
-                                        }
-
-                                    }
-
                                     if( !empty($degree_type_terms) ){
-
-                                        if( !empty( $department_terms ) ){
-
-                                            echo ', ';
-
-                                        }
 
                                         foreach ($degree_type_terms as $key => $value){
 
                                             $space = $key < 1 ? '' : ', ';
 
-                                            $deg = sprintf('%s<span>%s</span>',
+                                            $deg = sprintf('%s<span>%s Degree</span>',
                                                 $space,
                                                 $value->name
                                             );
 
                                             echo $deg;
+
+                                        }
+
+                                    }
+
+                                    if( !empty($department_terms) ){
+
+                                        if( !empty( $degree_type_terms ) ){
+
+                                            echo ', ';
+
+                                        }
+
+                                        foreach ($department_terms as $key => $value){
+
+                                            $space = $key < 1 ? '' : ', ';
+
+                                            $dept = sprintf('%s<span>%s Department</span>',
+                                                $space,
+                                                $value->name
+                                            );
+
+                                            echo $dept;
 
                                         }
 
@@ -142,7 +142,7 @@ if ( have_posts() ) :
                         $dept_ids = array();
 
                         if( !empty($department_terms) ){
-                            ?><h2>Departments</h2><p><?php
+                            ?><h2>Department</h2><p><?php
                             foreach ($department_terms as $key => $value) {
                                 if($key > 0){
                                     echo '<br>';
@@ -174,7 +174,7 @@ if ( have_posts() ) :
                         }
 
                         if( !empty($degree_type_terms) ){
-                            ?><h2>Degree Types</h2><p><?php
+                            ?><h2>Degree Type</h2><p><?php
                             foreach ($degree_type_terms as $key => $value) {
                                 if($key > 0){
                                     echo '<br>';
@@ -196,31 +196,104 @@ if ( have_posts() ) :
 
                         }
 
-                        // Add related posts
-                        $tax_query = array(
-                            'taxonomy' => 'keyword',
-                            'field'    => 'slug',
-                            'terms'    => array()
-                        );
+                        /* Add related posts
+                         * Related posts are currently defined as:
+                         * Any post which shares two of this post's keywords
+                         */
+                        // Get an array of tax slugs
+                        $keywords = array_map(create_function('$o', 'return $o->slug;'), $keyword_terms);
 
-                        foreach ($keyword_terms as $key => $term) {
-                            $tax_query['terms'][] = $term->slug;
+                        if( count( $keywords ) > 1 ){
+
+                            $tax_query = array(
+                                'relation' => 'OR'
+                            );
+
+                            // Make an array of every combination of two terms
+                            function two_combo_picker($arr, $temp_string, &$collect) {
+                                foreach($arr as $key => $item){
+                                    foreach($arr as $key2 => $item2){
+                                        if($key !== $key2){
+                                            $to_add = array(
+                                                $arr[$key],
+                                                $item2
+                                            );
+                                            sort($to_add);
+                                            if(!in_array($to_add, $collect)){
+                                                $collect[] = $to_add;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            $collection = array();
+                            two_combo_picker($keywords, "", $collection);
+
+                            foreach ($collection as $key => $terms) {
+
+                                $tax_query[] = array(
+                                    'taxonomy' => 'keyword',
+                                    'field'    => 'slug',
+                                    'terms'    => $terms,
+                                    'operator' => 'AND'
+                                );
+
+                            }
+
+                        } else {
+
+                            $tax_query = array(
+                                'taxonomy' => 'keyword',
+                                'field'    => 'slug',
+                                'terms'    => array()
+                            );
+
+                            foreach ($keyword_terms as $key => $term) {
+
+                                $tax_query['terms'][] = $term->slug;
+
+                            }
+
                         }
 
+                        $post_limit = 5;
                         $related_query_args = array(
                             'post_type'          => 'majors-and-degrees',
                             'post_status'        => 'any',
                             'posts_per_page'     => -1,
                             'orderby'            => 'title',
                             'order'              => 'ASC',
-                            'tax_query'          => $tax_query
+                            'tax_query'          => $tax_query,
+                            'post__not_in'       => array( get_the_ID() ),
+                            'posts_per_page'     => $post_limit
                         );
 
                         $related_query = new WP_Query( $related_query_args );
+                        $related_posts = $related_query->have_posts() ? $related_query->posts : array();
+                        $related_posts_length = $related_query->have_posts() ? count( $related_posts ) : 0;
 
-                        if( $related_query->have_posts() ){
+                        if( $related_posts_length < $post_limit ){
+
+                            $related_query_args['posts_per_page'] = $post_limit - $related_posts_length;
+                            $related_query_args['tax_query'] = array(
+                                'taxonomy' => 'keyword',
+                                'field'    => 'slug',
+                                'terms'    => $keywords
+                            );
+
+                            $related_query = new WP_Query( $related_query_args );
+
+                            if( $related_query->have_posts ){
+                                $related_posts = array_merge( $related_query->posts, $related_posts );
+                            }
+                        }
+
+                        if( count( $related_posts ) > 0 ){
 
                             echo '<div class="related-posts"><h2>Related Posts</h2>';
+
+                            // List the related post links
                             $output = array();
 
                             foreach ($related_query->posts as $key => $post) {
@@ -232,7 +305,8 @@ if ( have_posts() ) :
 
                             }
 
-                            echo implode(', ', $output);
+                            echo implode('   |   ', $output);
+
                             echo '</div>';
                         }
                     ?></div>
