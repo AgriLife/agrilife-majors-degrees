@@ -6,7 +6,7 @@ This plugin adds the "Majors and Degrees" custom post type and related shortcode
 
 ### Custom Fields
 **Header Image**
-- Image above the main post content. Minimum width 1024px, maximum height 340px.
+- Image above the main post content. Minimum width 1110px, maximum height 340px.
 
 **About the Degree**
 - Description of the degree.
