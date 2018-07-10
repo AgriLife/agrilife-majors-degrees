@@ -90,11 +90,27 @@ if ( have_posts() ) :
 
                                         foreach ($degree_type_terms as $key => $value){
 
-                                            $space = $key < 1 ? '' : ', ';
+                                            $name = $value->name;
+                                            $length = count($degree_type_terms);
+                                            $space = '';
 
-                                            $deg = sprintf('%s<span>%s Degree</span>',
+                                            if($key > 0){
+
+                                                $space .= $length > 2 ? ', ' : ' ';
+
+                                                if($key === $length - 1){
+                                                    $space .= 'and ';
+                                                }
+
+                                            }
+
+                                            if($key === $length - 1){
+                                                $name .= ' Degree';
+                                            }
+
+                                            $deg = sprintf('%s<span>%s</span>',
                                                 $space,
-                                                $value->name
+                                                $name
                                             );
 
                                             echo $deg;
@@ -184,7 +200,6 @@ if ( have_posts() ) :
 
                             ?><h2>Ranking</h2><?php
 
-
                             $ranking = $ranking ? stripslashes( $ranking ) : '';
                             $ranking = html_entity_decode( $ranking );
 
@@ -204,9 +219,10 @@ if ( have_posts() ) :
 
                         }
 
-                        /* Add related posts
+                        /* Add 5 related posts
                          * Related posts are currently defined as:
-                         * Any post which shares two of this post's keywords
+                         * Any post which shares two of this post's keywords,
+                         * then posts which share one of this post's keywords
                          */
                         // Get an array of tax slugs
                         $keywords = array_map(create_function('$o', 'return $o->slug;'), $keyword_terms);
