@@ -34,11 +34,36 @@ if ( have_posts() ) :
     <div id="content" role="main">
         <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
             <header class="entry-header row"><div class="columns"><?php
-                if( !empty( get_field('header_image') ) ):
-                ?><div class="image-wrap"><img src="<?php the_field('header_image'); ?>"><?php
+
+                $header_image = get_field('header_image');
+
+                if( !empty( $header_image ) ):
+
+                    $size_urls = $header_image['sizes'];
+
+                    $srcset = sprintf( '%s 720w, %s 1110w, %s 2220w',
+                        $size_urls['majors-and-degrees-header-medium'],
+                        $size_urls['majors-and-degrees-header-large'],
+                        $size_urls['majors-and-degrees-header-max']
+                    );
+
+                    $sizes = sprintf('%s, %s, %s',
+                        '(max-width: 720px) 720px',
+                        '(max-width: 1200px) 1110px',
+                        '2220px'
+                    );
+
+                    $header_image_output = sprintf( '<div class="image-wrap"><img src="%s" srcset="%s" sizes="%s">',
+                        $size_urls['majors-and-degrees-header-max'],
+                        $srcset,
+                        $sizes
+                    );
+
+                    echo $header_image_output;
+
                 endif; ?>
                 <h1><span><?php the_title(); ?></span></h1><?php
-                if( !empty( get_field('header_image') ) ){ ?></div><?php } ?>
+                if( !empty( $header_image ) ){ ?></div><?php } ?>
             </div></header>
             <div class="entry-content">
                 <div class="row">

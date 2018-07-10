@@ -18,6 +18,10 @@ define( 'AG_MAJDEG_DIR_FILE', __FILE__ );
 define( 'AG_MAJDEG_DIR_URL', plugin_dir_url( __FILE__ ) );
 define( 'AG_MAJDEG_TEMPLATE_PATH', AG_MAJDEG_DIR_PATH . 'view' );
 
+add_image_size( 'majors-and-degrees-header-max', 2220, 680, array( 'center', 'top' ) );
+add_image_size( 'majors-and-degrees-header-large', 1110, 340, array( 'center', 'top' ) );
+add_image_size( 'majors-and-degrees-header-medium', 720, 220, array( 'center', 'top' ) );
+
 add_action( 'init', function(){
 
   $post_type_slug = 'majors-and-degrees';
