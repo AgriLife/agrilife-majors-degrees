@@ -115,9 +115,17 @@ if ( have_posts() ) :
 
                                             $space = $key < 1 ? '' : ', ';
 
-                                            $dept = sprintf('%s<span>%s Department</span>',
+                                            $dept_name = $value->name . ' Department';
+
+                                            $link = get_option('taxonomy_' . $value->term_id . '_department-page');
+
+                                            if( !empty( $link ) ){
+                                                $dept_name = '<a href="' . $link . '">' . $dept_name . '</a>';
+                                            }
+
+                                            $dept = sprintf('%s<span>%s</span>',
                                                 $space,
-                                                $value->name
+                                                $dept_name
                                             );
 
                                             echo $dept;
@@ -166,22 +174,8 @@ if ( have_posts() ) :
 
                         $dept_ids = array();
 
-                        if( !empty($department_terms) ){
-                            ?><h2>Department</h2><p><?php
-                            foreach ($department_terms as $key => $value) {
-                                if($key > 0){
-                                    echo '<br>';
-                                }
-                                $dept = $value->name;
-                                $link = get_option('taxonomy_' . $value->term_id . '_department-page');
-                                if( !empty( $link ) ){
-                                    $dept = '<a href="' . $link . '">' . $dept . '</a>';
-                                }
-
-                                echo $dept;
-                                $dept_ids[] = $value->term_id;
-                            }
-                            ?></p><?php
+                        foreach ($department_terms as $key => $value) {
+                            $dept_ids[] = $value->term_id;
                         }
 
                         $ranking = get_option('taxonomy_' . $dept_ids[0] . '_ranking');
@@ -196,17 +190,6 @@ if ( have_posts() ) :
 
                             echo $ranking;
 
-                        }
-
-                        if( !empty($degree_type_terms) ){
-                            ?><h2>Degree Type</h2><p><?php
-                            foreach ($degree_type_terms as $key => $value) {
-                                if($key > 0){
-                                    echo '<br>';
-                                }
-                                echo $value->name;
-                            }
-                            ?></p><?php
                         }
 
                         ?></div><?php
