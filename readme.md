@@ -45,3 +45,9 @@ This shortcode displays a list of post titles from the "Majors and Degrees" cust
 
 Parameters: (none)
 This shortcode displays a search form that can be used to search through "Majors and Degrees" posts by their keyword taxonomy.
+
+
+## Developer Notes
+Run the following commands on this plugin's main directory:
+composer update
+composer install

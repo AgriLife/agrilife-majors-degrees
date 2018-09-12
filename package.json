@@ -1,6 +1,6 @@
 {
   "name": "agrilife-majors-degrees",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "AgriLife Majors and Degrees Post Type Plugin",
   "main": "agrilife-majors-degrees.php",
   "scripts": {
